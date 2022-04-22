@@ -6,21 +6,23 @@ app.use(express.json())
 app.use(cors());
 const connect = require('./db/db');
 
-const { register, login } = require('./controllers/user.controller')
-const { flatregister, getflats, getbyidflat, getFlatspagination, highsortedflat, lowsortedflat, blockname, byflattype } = require('./controllers/flat.controller')
-const { residents } = require('./controllers/resident.controller')
+const { register, login, getuserbyid } = require('./controllers/user.controller')
+const { createpetdetail } = require('./controllers/petdetails.controller')
+const { createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified } = require('./controllers/petshop.controller')
 
 app.post("/register", register)
+app.get("/getpetshop", getpetshop)
+app.get("/getuserbyid/:id", getuserbyid)
+app.get("/getpetshopbyid/:id", getpetshopbyid)
 app.post("/login", login)
-app.post("/flatregister", flatregister)
-app.get("/getflats", getflats)
-app.post("/residents", residents)
-app.get("/getbyidflat/:id", getbyidflat)
-app.get("/getFlatspagination", getFlatspagination)
-app.get("/highsortedflat", highsortedflat)
-app.get("/lowsortedflat", lowsortedflat)
-app.get("/blockname/:name", blockname)
-app.get("/byflattype/:name", byflattype)
+app.post("/createpetshop", createpetshop)
+app.post("/createpetdetail", createpetdetail)
+app.get("/getpetbycity/:name", getpetbycity)
+app.get("/lowsortedpetshop", lowsortedpetshop)
+app.get("/highsortedpetshop", highsortedpetshop)
+app.get("/getbyverified/:name", getbyverified)
+
+
 
 
 

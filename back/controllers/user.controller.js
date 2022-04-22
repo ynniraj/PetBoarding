@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 
 
 const register = async (req, res) => {
-    const { username, email, phone, password: plaintextpassword } = req.body;
+    const { username, email, phone, password: plaintextpassword, image } = req.body;
 
     const password = await bcrypt.hash(plaintextpassword, 10);
     try {
-        const user = await User.create({ username, email, phone, password });
+        const user = await User.create({ username, email, phone, password, image });
 
         return res.status(200).send({ user, status: "ok" });
     } catch (error) {
@@ -16,6 +16,14 @@ const register = async (req, res) => {
     }
 };
 
+const getuserbyid = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).lean().exec()
+        return res.status(200).send(user);
+    } catch (err) {
+        return res.status(500).send(err)
+    }
+}
 
 
 const login = async (req, res) => {
@@ -35,5 +43,5 @@ const login = async (req, res) => {
 };
 
 
-module.exports = { register, login }
+module.exports = { register, login, getuserbyid }
 

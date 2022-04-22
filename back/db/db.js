@@ -1,5 +1,5 @@
 const mongooose = require('mongoose');
 
 module.exports = () => {
-    return mongooose.connect("mongodb+srv://ynniraj:ynniraj@cluster0.w8jir.mongodb.net/test", { useNewUrlParser: true, useUnifiedTopology: true })
+    return mongooose.connect("mongodb://localhost:27017/petboarding", { useNewUrlParser: true, useUnifiedTopology: true })
 }
