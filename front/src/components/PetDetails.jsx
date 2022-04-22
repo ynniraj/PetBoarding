@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -39,30 +39,25 @@ export default function PetDetails() {
     getpetdata();
   }, []);
 
+  const [img, setImg] = useState({});
   const getpetdata = () => {
     const petid = localStorage.getItem("pets_id");
     axios
-      .get(`http://localhost:8080/getpetshopbyid/${petid}`)
+      .get(`https://petshop-project.herokuapp.com/getpetshopbyid/${petid}`)
       .then((res) => {
-        console.log(res.data);
+        setImg(res.data);
         dispatch(selectProducts([res.data]));
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   return (
     <>
       <Container>
         <Box sx={{ display: "flex", justifyContent: "space-around", mt: 5 }}>
           <Box sx={{ width: "40%" }}>
-            <img
-              src="https://media.istockphoto.com/photos/crazy-looking-black-and-white-border-collie-dog-say-looking-intently-picture-id1213516345?k=20&m=1213516345&s=612x612&w=0&h=_XUSwcrXe5HjI2QEby0ex6Tl1fB_YJUzUU8o2cUt0YA="
-              alt=""
-              srcset=""
-              style={{ width: "100%" }}
-            />
+            <img src={img.image} alt="" srcset="" style={{ width: "100%" }} />
           </Box>
           <Box sx={{ width: "50%" }}>
             <h3

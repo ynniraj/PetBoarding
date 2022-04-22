@@ -30,7 +30,7 @@ export default function CreatePetDetail() {
       emergencytransport: event.target.emergencytransport.value,
     };
     axios
-      .post("http://localhost:8080/createpetdetail", payload)
+      .post("https://petshop-project.herokuapp.com/createpetdetail", payload)
       .then((res) => {
         console.log(res);
         localStorage.setItem(

@@ -10,10 +10,9 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import axios from "axios";
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
-import { TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../Redux/DataApi/action";
 
@@ -38,11 +37,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function ShowTable() {
-  
   const dispatch = useDispatch();
 
   const getTableData = useSelector((store) => store.getDataReducer.products);
-
 
   const navigate = useNavigate();
 
@@ -52,7 +49,7 @@ export default function ShowTable() {
 
   const getpetdata = () => {
     axios
-      .get("http://localhost:8080/getpetshop")
+      .get("https://petshop-project.herokuapp.com/getpetshop")
       .then((res) => {
         console.log(res.data);
         dispatch(setProducts(res.data));
@@ -67,22 +64,9 @@ export default function ShowTable() {
     navigate("/petstoredetails");
   };
 
-  const handleSubmitCity = (e) => {
-    e.preventDefault();
-    axios
-      .get(`http://localhost:8080/getpetbycity/${e.target.city.value}`)
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setProducts(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleHighSort = () => {
     axios
-      .get(`http://localhost:8080/highsortedpetshop`)
+      .get(`https://petshop-project.herokuapp.com/highsortedpetshop`)
       .then((response) => {
         console.log(response.data);
         dispatch(setProducts(response.data));
@@ -93,7 +77,7 @@ export default function ShowTable() {
   };
   const handlelowSort = () => {
     axios
-      .get(`http://localhost:8080/lowsortedpetshop`)
+      .get(`https://petshop-project.herokuapp.com/lowsortedpetshop`)
       .then((response) => {
         console.log(response.data);
         dispatch(setProducts(response.data));
@@ -105,7 +89,7 @@ export default function ShowTable() {
 
   const handleVerifiedSort = () => {
     axios
-      .get(`http://localhost:8080/getbyverified/Verified`)
+      .get(`https://petshop-project.herokuapp.com/getbyverified/Verified`)
       .then((response) => {
         console.log(response.data);
         dispatch(setProducts(response.data));
@@ -117,7 +101,31 @@ export default function ShowTable() {
 
   const handleUnverifiedSort = () => {
     axios
-      .get(`http://localhost:8080/getbyverified/Unverified`)
+      .get(`https://petshop-project.herokuapp.com/getbyverified/Unverified`)
+      .then((response) => {
+        console.log(response.data);
+        dispatch(setProducts(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleRatingHigh = () => {
+    axios
+      .get(`https://petshop-project.herokuapp.com/highrating`)
+      .then((response) => {
+        console.log(response.data);
+        dispatch(setProducts(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleRatingLow = () => {
+    axios
+      .get(`https://petshop-project.herokuapp.com/lowrating`)
       .then((response) => {
         console.log(response.data);
         dispatch(setProducts(response.data));
@@ -133,7 +141,6 @@ export default function ShowTable() {
         <Box
           component="form"
           noValidate
-          onSubmit={handleSubmitCity}
           sx={{
             mx: 2,
             mt: 3,
@@ -143,20 +150,6 @@ export default function ShowTable() {
           }}
         >
           <Box>
-            <TextField
-              required
-              fullWidth
-              name="city"
-              label="Search By City Name"
-              type="text"
-              id="city"
-            />
-
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
-              Submit
-            </Button>
-          </Box>
-          <Box sx={{ mx: 5, px: 2 }}>
             <Button variant="contained" onClick={handleHighSort}>
               Sort High to Low
             </Button>
@@ -164,7 +157,7 @@ export default function ShowTable() {
               Sort Low to High
             </Button>
           </Box>
-          <Box sx={{ mx: 5, px: 2 }}>
+          <Box>
             <Button variant="contained" onClick={handleVerifiedSort}>
               Sort Verified
             </Button>
@@ -174,6 +167,18 @@ export default function ShowTable() {
               onClick={handleUnverifiedSort}
             >
               Sort Unverified
+            </Button>
+          </Box>
+          <Box>
+            <Button variant="contained" onClick={handleRatingHigh}>
+              Sort Rating High To Low
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ mx: 2 }}
+              onClick={handleRatingLow}
+            >
+              Sort Rating Low To High
             </Button>
           </Box>
         </Box>
@@ -189,6 +194,7 @@ export default function ShowTable() {
                 <StyledTableCell align="right">Cost per day</StyledTableCell>
                 <StyledTableCell align="right">Verified</StyledTableCell>
                 <StyledTableCell align="right">Rating</StyledTableCell>
+                <StyledTableCell align="right">Image</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -207,6 +213,10 @@ export default function ShowTable() {
                   </StyledTableCell>
                   <StyledTableCell align="right">{el.verified}</StyledTableCell>
                   <StyledTableCell align="right">{el.rating}</StyledTableCell>
+                  <StyledTableCell align="right" sx={{ width: "14%" }}>
+                    {" "}
+                    <img src={el.image} alt="" style={{ width: "100%" }} />{" "}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

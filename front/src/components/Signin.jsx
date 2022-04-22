@@ -39,13 +39,13 @@ export default function SignIn() {
       };
 
       axios
-        .post("http://localhost:8080/login", payload)
+        .post("https://petshop-project.herokuapp.com/login", payload)
         .then((res) => {
           alert("Login successfully");
           console.log(res);
           localStorage.setItem("token", res.data.token);
           dispatch(userLogin(res.data.token));
-          localStorage.setItem("user_id", JSON.stringify(res.data.user._id));
+          localStorage.setItem("user_id", res.data.user._id);
           navigate("/");
         })
         .catch((err) => {

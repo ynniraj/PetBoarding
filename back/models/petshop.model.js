@@ -11,6 +11,7 @@ const petShopSchema = mongoose.Schema({
     costperday: { type: 'Number', required: true },
     verified: { type: 'string', required: true },
     rating: { type: 'Number', required: true },
+    image: { type: 'string', required: true },
     petshopdetails: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Petdetail",

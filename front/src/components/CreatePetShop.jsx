@@ -24,11 +24,12 @@ export default function CreatePetShop() {
       costperday: event.target.costperday.value,
       verified: event.target.verified.value,
       rating: event.target.rating.value,
+      image: event.target.image.value,
       petshopdetails: JSON.parse(localStorage.getItem("petdeatilId")),
     };
     console.log(payload);
     axios
-      .post("http://localhost:8080/createpetshop", payload)
+      .post("https://petshop-project.herokuapp.com/createpetshop", payload)
       .then((res) => {
         console.log(res);
         alert("Flat created successfully");
@@ -135,6 +136,16 @@ export default function CreatePetShop() {
                     id="rating"
                     label="Ratings"
                     name="rating"
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="image"
+                    label="Image"
+                    name="image"
                     autoComplete="off"
                   />
                 </Grid>

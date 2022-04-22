@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin } from "../Redux/Login/action";
+import { setProducts } from "../Redux/DataApi/action";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -25,9 +26,8 @@ const Navbar = () => {
   dispatch(userLogin(localStorageToken));
 
   const navigate = useNavigate();
-  
-  const [user, setUser] = useState("");
 
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     getuser();
@@ -52,10 +52,13 @@ const Navbar = () => {
   };
 
   const getuser = () => {
-    const userid = JSON.parse(localStorage.getItem("user_id"));
+    if (localStorage.getItem("user_id") === "") {
+      return;
+    }
+    const userid = localStorage.getItem("user_id");
 
     axios
-      .get(`http://localhost:8080/getuserbyid/${userid}`)
+      .get(`https://petshop-project.herokuapp.com/getuserbyid/${userid}`)
       .then((res) => {
         setUser(JSON.parse(res.data.image));
       })
@@ -64,7 +67,29 @@ const Navbar = () => {
       });
   };
 
-  console.log(user);
+  const [city, setCity] = useState("");
+  const handleSubmitCity = (e) => {
+    e.preventDefault();
+    axios
+      .get(`https://petshop-project.herokuapp.com/getpetbycity/${city}`)
+      .then((response) => {
+        console.log(response.data);
+        dispatch(setProducts(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSignup = () => {
+    navigate("/register");
+  };
+
+  const handleLogout = () => {
+    dispatch(userLogin({}));
+    localStorage.setItem("token", "");
+    localStorage.setItem("user_id", "");
+  };
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -78,7 +103,12 @@ const Navbar = () => {
             LOGO
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -115,6 +145,7 @@ const Navbar = () => {
               </MenuItem>
             </Menu>
           </Box>
+
           <Typography
             variant="h6"
             noWrap
@@ -137,6 +168,35 @@ const Navbar = () => {
             >
               New Shop
             </Button>
+          </Box>
+
+          <Box sx={{ display: "flex", mr: "50%" }}>
+            <form action="" onSubmit={handleSubmitCity}>
+              <input
+                type="text"
+                placeholder="Search By City Name"
+                style={{
+                  padding: "10px",
+                  outline: "none",
+                  borderRadius: "10px",
+                  border: "none",
+                  fontSize: "16px",
+                }}
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <input
+                type="submit"
+                value="Search"
+                style={{
+                  padding: "10px",
+                  marginLeft: "10px",
+                  borderRadius: "9px",
+                  border: "none",
+                  cursor: "pointer",
+                  backgroundColor: "white",
+                }}
+              />
+            </form>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -173,7 +233,7 @@ const Navbar = () => {
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography
                   textAlign="center"
-                  onClick={() => navigate("/login")}
+                  onClick={!token ? handleSignup : handleLogout}
                   sx={{ padding: "2px" }}
                 >
                   {!token ? "Login" : "Logout"}

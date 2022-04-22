@@ -65,6 +65,25 @@ const lowsortedpetshop = async (req, res) => {
 }
 
 
+const highrating = async (req, res) => {
+    try {
+        const petshop = await Petshop.find().sort({ rating: -1 }).lean().exec()
+        return res.status(200).send(petshop);
+
+    } catch (err) {
+        return res.status(500).send(err)
+    }
+}
+const lowrating = async (req, res) => {
+    try {
+        const petshop = await Petshop.find().sort({ rating: 1 }).lean().exec()
+        return res.status(200).send(petshop);
+
+    } catch (err) {
+        return res.status(500).send(err)
+    }
+}
+
 const getbyverified = async (req, res) => {
     try {
         const petshop = await Petshop.find({ verified: req.params.name }).lean().exec()
@@ -77,5 +96,5 @@ const getbyverified = async (req, res) => {
 
 
 
-module.exports = { createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified };
+module.exports = { highrating, lowrating, createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified };
 
