@@ -14,9 +14,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { userLogin, adminLogin } from "../Redux/Login/action";
+import { userLogin, adminLogin, userImage } from "../Redux/Login/action";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const theme = createTheme();
 
@@ -49,8 +48,11 @@ export default function SignIn() {
             localStorage.setItem("admin", "true");
           }
           localStorage.setItem("token", res.data.token);
+
           dispatch(userLogin(res.data.token));
+          dispatch(userImage(res.data.user.image));
           localStorage.setItem("user_id", res.data.user._id);
+          localStorage.setItem("user_image", res.data.user.image);
           navigate("/");
         })
         .catch((err) => {

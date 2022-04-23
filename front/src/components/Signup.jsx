@@ -77,7 +77,7 @@ export default function SignUp() {
                 multiple={false}
                 onDone={(file) => {
                   console.log(JSON.stringify(file.base64));
-                  setFile(JSON.stringify(file.base64));
+                  setFile(file.base64);
                 }}
               />
             </label>

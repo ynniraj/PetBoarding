@@ -22,6 +22,7 @@ export default function UserPet() {
       startdate: event.target.startdate.value,
       enddate: event.target.enddate.value,
       userid: localStorage.getItem("user_id"),
+      petshopdetail: localStorage.getItem("pets_id"),
     };
     console.log(payload);
     axios

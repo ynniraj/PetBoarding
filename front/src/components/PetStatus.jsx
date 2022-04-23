@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../Redux/DataApi/action";
+import { selectProducts } from "../Redux/DataApi/action";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,10 +38,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function PetStatus() {
   const navigate = useNavigate();
-  const [userpet, setUserpet] = useState([]);
+
   useEffect(() => {
     getuserpetdetails();
   }, []);
+
+  const [getTableData, setTableData] = useState([]);
 
   const getuserpetdetails = () => {
     const getuserid = localStorage.getItem("user_id");
@@ -49,11 +51,16 @@ export default function PetStatus() {
       .get(`http://localhost:8080/getuserpetbyid/${getuserid}`)
       .then((res) => {
         console.log(res);
-        setUserpet(res.data);
+        setTableData(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handlePetStatus = (id) => {
+    localStorage.setItem("petStatus", id);
+    navigate("/petstatusshop");
   };
 
   return (
@@ -71,8 +78,12 @@ export default function PetStatus() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userpet.map((el) => (
-                <StyledTableRow key={el._id} sx={{ cursor: "pointer" }}>
+              {getTableData.map((el) => (
+                <StyledTableRow
+                  key={el._id}
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => handlePetStatus(el._id)}
+                >
                   <StyledTableCell align="right">{el.name}</StyledTableCell>
                   <StyledTableCell align="right">{el.pettype}</StyledTableCell>
                   <StyledTableCell align="right">

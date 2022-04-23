@@ -1,6 +1,4 @@
 import * as React from "react";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -10,9 +8,10 @@ import TabPanel from "@mui/lab/TabPanel";
 import { Button, Grid } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import { selectProducts } from "../Redux/DataApi/action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -22,55 +21,54 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function PetDetails() {
+export default function PetStatusShop() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getTableData = useSelector(
-    (store) => store.getDataReducer.selectedProduct
-  );
-  console.log(getTableData);
-
   const [value, setValue] = React.useState("1");
+  const [data, setData] = useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   useEffect(() => {
-    getpetdata();
+    getuserpetdetails();
   }, []);
 
-  const [img, setImg] = useState({});
-  const getpetdata = () => {
-    const petid = localStorage.getItem("pets_id");
+  const [image, setImg] = useState({});
+  const getuserpetdetails = () => {
+    const petStatus = localStorage.getItem("petStatus");
     axios
-      .get(`https://petshop-project.herokuapp.com/getpetshopbyid/${petid}`)
+      .get(`http://localhost:8080/adminuserdetails/${petStatus}`)
       .then((res) => {
-        setImg(res.data);
-        dispatch(selectProducts([res.data]));
+        console.log(res);
+        setImg(res.data.petshopdetail[0]);
+        setData([res.data]);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  console.log(image);
   return (
     <>
       <Container>
         <Box sx={{ display: "flex", justifyContent: "space-around", mt: 5 }}>
           <Box sx={{ width: "40%" }}>
-            <img src={img.image} alt="" srcset="" style={{ width: "100%" }} />
+            <img src={image.image} alt="" srcset="" style={{ width: "100%" }} />
           </Box>
           <Box sx={{ width: "50%" }}>
             <h3
               style={{
-                fontSize: "26px",
+                fontSize: "30px",
                 margin: "0px",
                 padding: "0px",
                 marginBottom: "10px",
+                color: "Blue",
               }}
             >
-              About Us
+              {image.name}
             </h3>
             <p
               style={{
@@ -98,14 +96,14 @@ export default function PetDetails() {
               </TabPanel>
               <TabPanel value="2" sx={{ fontSize: "20px" }}>
                 <Button onClick={() => navigate("/createuserpet")}>
-                  Book Now
+                  Book Again
                 </Button>
               </TabPanel>
             </TabContext>
           </Box>
         </Box>
 
-        {getTableData.map((el) => (
+        {data.map((el) => (
           <Box sx={{ mt: 5 }} key={el._id}>
             <h3
               style={{
@@ -123,7 +121,7 @@ export default function PetDetails() {
             >
               <Grid item xs={6}>
                 <Item sx={{ p: 2 }}>
-                  Number of pets that will be watched at one time
+                  Shop Name
                   <p
                     style={{
                       margin: "0px",
@@ -131,13 +129,13 @@ export default function PetDetails() {
                       paddingTop: "10px",
                     }}
                   >
-                    {el.petshopdetails[0].petwatch}
+                    {el.petshopdetail[0].name}
                   </p>
                 </Item>
               </Grid>
               <Grid item xs={6}>
                 <Item sx={{ p: 2 }}>
-                  Accepted Pet Types
+                  City
                   <p
                     style={{
                       margin: "0px",
@@ -146,13 +144,13 @@ export default function PetDetails() {
                     }}
                   >
                     {" "}
-                    {el.petshopdetails[0].pettypes}
+                    {el.petshopdetail[0].city}
                   </p>
                 </Item>
               </Grid>
               <Grid item xs={6}>
                 <Item sx={{ p: 2 }}>
-                  Accepted Pet size
+                  Address
                   <p
                     style={{
                       margin: "0px",
@@ -160,13 +158,13 @@ export default function PetDetails() {
                       paddingTop: "10px",
                     }}
                   >
-                    {el.petshopdetails[0].petsize}
+                    {el.petshopdetail[0].address}
                   </p>
                 </Item>
               </Grid>
               <Grid item xs={6}>
                 <Item sx={{ p: 2 }}>
-                  Level of adult supervision
+                  Cost Per Day
                   <p
                     style={{
                       margin: "0px",
@@ -174,13 +172,13 @@ export default function PetDetails() {
                       paddingTop: "10px",
                     }}
                   >
-                    {el.petshopdetails[0].supervision}
+                    {el.petshopdetail[0].costperday}
                   </p>
                 </Item>
               </Grid>
               <Grid item xs={6}>
                 <Item sx={{ p: 2 }}>
-                  The place your pet will sleep at night
+                  Verified Or Not
                   <p
                     style={{
                       margin: "0px",
@@ -188,13 +186,13 @@ export default function PetDetails() {
                       paddingTop: "10px",
                     }}
                   >
-                    {el.petshopdetails[0].sleep}
+                    {el.petshopdetail[0].verified}
                   </p>
                 </Item>
               </Grid>
               <Grid item xs={6}>
                 <Item sx={{ p: 2 }}>
-                  The number of potty breaks provided per day
+                  Ratings
                   <p
                     style={{
                       margin: "0px",
@@ -202,63 +200,7 @@ export default function PetDetails() {
                       paddingTop: "10px",
                     }}
                   >
-                    {el.petshopdetails[0].pottybreaks}
-                  </p>
-                </Item>
-              </Grid>
-              <Grid item xs={6}>
-                <Item sx={{ p: 2 }}>
-                  The number of walks provided per day
-                  <p
-                    style={{
-                      margin: "0px",
-                      padding: "0px",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    {el.petshopdetails[0].walks}
-                  </p>
-                </Item>
-              </Grid>
-              <Grid item xs={6}>
-                <Item sx={{ p: 2 }}>
-                  The type of home I stay in
-                  <p
-                    style={{
-                      margin: "0px",
-                      padding: "0px",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    {el.petshopdetails[0].hometype}
-                  </p>
-                </Item>
-              </Grid>
-              <Grid item xs={6}>
-                <Item sx={{ p: 2 }}>
-                  My outdoor area size
-                  <p
-                    style={{
-                      margin: "0px",
-                      padding: "0px",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    {el.petshopdetails[0].outdoorsize}
-                  </p>
-                </Item>
-              </Grid>
-              <Grid item xs={6}>
-                <Item sx={{ p: 2 }}>
-                  Emergency transport
-                  <p
-                    style={{
-                      margin: "0px",
-                      padding: "0px",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    {el.petshopdetails[0].emergencytransport}
+                    {el.petshopdetail[0].rating}
                   </p>
                 </Item>
               </Grid>

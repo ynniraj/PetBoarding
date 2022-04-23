@@ -11,6 +11,7 @@ import UserPet from "../components/UserPet";
 import PetStatus from "../components/PetStatus";
 import AdminStatus from "../components/AdminStatus";
 import AdminUserDetails from "../components/AdminUserDetails";
+import PetStatusShop from "../components/PetStatusShop";
 
 const Routers = () => {
   return (
@@ -27,6 +28,7 @@ const Routers = () => {
         <Route exact path="/petstatus" element={<PetStatus />} />
         <Route exact path="/allpetstatus" element={<AdminStatus />} />
         <Route exact path="/adminuserdetails" element={<AdminUserDetails />} />
+        <Route exact path="/petstatusshop" element={<PetStatusShop />} />
       </Routes>
     </>
   );

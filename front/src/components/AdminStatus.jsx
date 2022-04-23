@@ -60,6 +60,21 @@ export default function AdminStatus() {
     navigate("/adminuserdetails");
   };
 
+  const handleStatus = (id) => {
+    const payload = {
+      status: "Confirmed",
+    };
+    axios
+      .patch(`http://localhost:8080/adminpatch/${id}`, payload)
+      .then((response) => {
+        getalluser();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(payload);
+  };
+
   return (
     <>
       <Container component="main" maxWidth="m">
@@ -72,22 +87,32 @@ export default function AdminStatus() {
                 <StyledTableCell align="right">Start Date</StyledTableCell>
                 <StyledTableCell align="right">End Date</StyledTableCell>
                 <StyledTableCell align="right">Status</StyledTableCell>
+                <StyledTableCell align="right">View</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {userpet.map((el) => (
-                <StyledTableRow
-                  key={el._id}
-                  sx={{ cursor: "pointer" }}
-                  onClick={() => handleUserDetails(el._id)}
-                >
+                <StyledTableRow key={el._id} sx={{ cursor: "pointer" }}>
                   <StyledTableCell align="right">{el.name}</StyledTableCell>
                   <StyledTableCell align="right">{el.pettype}</StyledTableCell>
                   <StyledTableCell align="right">
                     {el.startdate}
                   </StyledTableCell>
                   <StyledTableCell align="right">{el.enddate}</StyledTableCell>
-                  <StyledTableCell align="right">{el.status}</StyledTableCell>
+                  <StyledTableCell align="right">
+                    {
+                      <Button onClick={() => handleStatus(el._id)}>
+                        {el.status}
+                      </Button>
+                    }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {
+                      <Button onClick={() => handleUserDetails(el._id)}>
+                        View
+                      </Button>
+                    }
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

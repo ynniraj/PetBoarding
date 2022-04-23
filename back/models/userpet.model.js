@@ -14,6 +14,11 @@ const userpetSchema = mongoose.Schema({
         ref: "User",
         required: true
     }],
+    petshopdetail: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Petshop",
+        required: true
+    }],
 });
 
 module.exports = mongoose.model('Userpet', userpetSchema);

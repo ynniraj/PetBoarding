@@ -1,11 +1,12 @@
 import { createStore, combineReducers } from 'redux';
 import { getDataReducer } from '../Redux/DataApi/reducer';
-import { LogInReducer, adminReducer } from '../Redux/Login/reducer';
+import { LogInReducer, adminReducer,userImageReducer } from '../Redux/Login/reducer';
 
 const rootReducer = combineReducers({
     getDataReducer,
     LogInReducer,
-    adminReducer
+    adminReducer,
+    userImageReducer
 })
 
 export const store = createStore(rootReducer,

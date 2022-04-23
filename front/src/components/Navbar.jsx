@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogin, adminLogin } from "../Redux/Login/action";
+import { userLogin, adminLogin, userImage } from "../Redux/Login/action";
 import { setProducts } from "../Redux/DataApi/action";
 
 const Navbar = () => {
@@ -23,18 +23,17 @@ const Navbar = () => {
 
   const token = useSelector((store) => store.LogInReducer.token);
   const admin = useSelector((store) => store.adminReducer.admin);
+  const userImages = useSelector((store) => store.userImageReducer.image);
   const localStorageToken = localStorage.getItem("token");
   dispatch(userLogin(localStorageToken));
   const localStorageAdmin = localStorage.getItem("admin");
   dispatch(adminLogin(localStorageAdmin));
+  const localStorageImage = localStorage.getItem("user_image");
+  dispatch(userImage(localStorageImage));
 
   const navigate = useNavigate();
 
-  const [user, setUser] = useState("");
-
-  useEffect(() => {
-    getuser();
-  }, []);
+  console.log(userImage, "SHDGk");
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -52,22 +51,6 @@ const Navbar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-
-  const getuser = () => {
-    if (localStorage.getItem("user_id") === "") {
-      return;
-    }
-    const userid = localStorage.getItem("user_id");
-
-    axios
-      .get(`https://petshop-project.herokuapp.com/getuserbyid/${userid}`)
-      .then((res) => {
-        setUser(JSON.parse(res.data.image));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   const [city, setCity] = useState("");
@@ -93,6 +76,7 @@ const Navbar = () => {
     localStorage.setItem("token", "");
     localStorage.setItem("admin", "");
     localStorage.setItem("user_id", "");
+    localStorage.setItem("user_image", "");
   };
   return (
     <AppBar position="static">
@@ -102,9 +86,14 @@ const Navbar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/")}
           >
-            LOGO
+            Pet Shop
           </Typography>
 
           <Box
@@ -175,12 +164,7 @@ const Navbar = () => {
                 New Shop
               </Button>
             ) : (
-              <Button
-                sx={{ my: 2, color: "white", display: "block" }}
-                onClick={() => navigate("/createuserpet")}
-              >
-                Pet Shop
-              </Button>
+              ""
             )}
 
             {admin ? (
@@ -191,48 +175,57 @@ const Navbar = () => {
                 Check Orders
               </Button>
             ) : (
+              ""
+            )}
+            {token ? (
               <Button
                 sx={{ my: 2, color: "white", display: "block" }}
                 onClick={() => navigate("/petstatus")}
               >
                 Pet Status
               </Button>
+            ) : (
+              ""
             )}
           </Box>
 
-          <Box sx={{ display: "flex", mr: "40%" }}>
-            <form action="" onSubmit={handleSubmitCity}>
-              <input
-                type="text"
-                placeholder="Search By City Name"
-                style={{
-                  padding: "10px",
-                  outline: "none",
-                  borderRadius: "10px",
-                  border: "none",
-                  fontSize: "16px",
-                }}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <input
-                type="submit"
-                value="Search"
-                style={{
-                  padding: "10px",
-                  marginLeft: "10px",
-                  borderRadius: "9px",
-                  border: "none",
-                  cursor: "pointer",
-                  backgroundColor: "white",
-                }}
-              />
-            </form>
-          </Box>
+          {token ? (
+            <Box sx={{ display: "flex", mr: "40%" }}>
+              <form action="" onSubmit={handleSubmitCity}>
+                <input
+                  type="text"
+                  placeholder="Search By City Name"
+                  style={{
+                    padding: "10px",
+                    outline: "none",
+                    borderRadius: "10px",
+                    border: "none",
+                    fontSize: "16px",
+                  }}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+                <input
+                  type="submit"
+                  value="Search"
+                  style={{
+                    padding: "10px",
+                    marginLeft: "10px",
+                    borderRadius: "9px",
+                    border: "none",
+                    cursor: "pointer",
+                    backgroundColor: "white",
+                  }}
+                />
+              </form>
+            </Box>
+          ) : (
+            ""
+          )}
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, mr: 3 }}>
-                <Avatar alt="Remy Sharp" src={user} />
+                <Avatar alt="Remy Sharp" src={userImages} />
               </IconButton>
             </Tooltip>
             <Menu
