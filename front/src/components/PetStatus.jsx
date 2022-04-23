@@ -48,7 +48,7 @@ export default function PetStatus() {
   const getuserpetdetails = () => {
     const getuserid = localStorage.getItem("user_id");
     axios
-      .get(`http://localhost:8080/getuserpetbyid/${getuserid}`)
+      .get(`https://petshop-project.herokuapp.com/getuserpetbyid/${getuserid}`)
       .then((res) => {
         console.log(res);
         setTableData(res.data);

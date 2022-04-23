@@ -38,7 +38,7 @@ export default function AdminUserDetails() {
   const getAdminUserData = () => {
     const adminuserid = localStorage.getItem("adminuserid");
     axios
-      .get(`http://localhost:8080/adminuserdetails/${adminuserid}`)
+      .get(`https://petshop-project.herokuapp.com/adminuserdetails/${adminuserid}`)
       .then((res) => {
         console.log(res);
         setUserData([res.data]);

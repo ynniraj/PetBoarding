@@ -45,7 +45,7 @@ export default function AdminStatus() {
 
   const getalluser = () => {
     axios
-      .get(`http://localhost:8080/getuserpet`)
+      .get(`https://petshop-project.herokuapp.com/getuserpet`)
       .then((res) => {
         console.log(res);
         setUserpet(res.data);
@@ -65,7 +65,7 @@ export default function AdminStatus() {
       status: "Confirmed",
     };
     axios
-      .patch(`http://localhost:8080/adminpatch/${id}`, payload)
+      .patch(`https://petshop-project.herokuapp.com/adminpatch/${id}`, payload)
       .then((response) => {
         getalluser();
       })

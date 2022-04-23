@@ -40,7 +40,7 @@ export default function PetStatusShop() {
   const getuserpetdetails = () => {
     const petStatus = localStorage.getItem("petStatus");
     axios
-      .get(`http://localhost:8080/adminuserdetails/${petStatus}`)
+      .get(`https://petshop-project.herokuapp.com/adminuserdetails/${petStatus}`)
       .then((res) => {
         console.log(res);
         setImg(res.data.petshopdetail[0]);

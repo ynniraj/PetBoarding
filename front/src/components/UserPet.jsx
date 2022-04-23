@@ -26,7 +26,7 @@ export default function UserPet() {
     };
     console.log(payload);
     axios
-      .post("http://localhost:8080/userpet", payload)
+      .post("https://petshop-project.herokuapp.com/userpet", payload)
       .then((res) => {
         console.log(res);
       })
