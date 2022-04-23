@@ -14,8 +14,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { userLogin } from "../Redux/Login/action";
+import { userLogin, adminLogin } from "../Redux/Login/action";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const theme = createTheme();
 
@@ -43,6 +44,10 @@ export default function SignIn() {
         .then((res) => {
           alert("Login successfully");
           console.log(res);
+          if (res.data.user.username === "admin") {
+            dispatch(adminLogin(true));
+            localStorage.setItem("admin", "true");
+          }
           localStorage.setItem("token", res.data.token);
           dispatch(userLogin(res.data.token));
           localStorage.setItem("user_id", res.data.user._id);
@@ -53,9 +58,6 @@ export default function SignIn() {
         });
     }
   };
-
-  //   const localStorageToken = localStorage.getItem("token");
-  //   dispatch(userLogin(localStorageToken));
 
   return (
     <ThemeProvider theme={theme}>

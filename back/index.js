@@ -8,6 +8,7 @@ const connect = require('./db/db');
 
 const { register, login, getuserbyid } = require('./controllers/user.controller')
 const { createpetdetail } = require('./controllers/petdetails.controller')
+const { userpet, getuserpet, getuserpetbyid } = require('./controllers/userpet.controller')
 const { createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified, highrating, lowrating } = require('./controllers/petshop.controller')
 
 app.post("/register", register)
@@ -23,6 +24,10 @@ app.get("/highsortedpetshop", highsortedpetshop)
 app.get("/highrating", highrating)
 app.get("/lowrating", lowrating)
 app.get("/getbyverified/:name", getbyverified)
+app.post("/userpet", userpet)
+app.get("/getuserpet", getuserpet)
+app.get("/getuserpetbyid/:id", getuserpetbyid)
+
 
 
 

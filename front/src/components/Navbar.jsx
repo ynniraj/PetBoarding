@@ -15,15 +15,18 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogin } from "../Redux/Login/action";
+import { userLogin, adminLogin } from "../Redux/Login/action";
 import { setProducts } from "../Redux/DataApi/action";
 
 const Navbar = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((store) => store.LogInReducer.token);
+  const admin = useSelector((store) => store.adminReducer.admin);
   const localStorageToken = localStorage.getItem("token");
   dispatch(userLogin(localStorageToken));
+  const localStorageAdmin = localStorage.getItem("admin");
+  dispatch(adminLogin(localStorageAdmin));
 
   const navigate = useNavigate();
 
@@ -88,6 +91,7 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(userLogin({}));
     localStorage.setItem("token", "");
+    localStorage.setItem("admin", "");
     localStorage.setItem("user_id", "");
   };
   return (
@@ -162,15 +166,41 @@ const Navbar = () => {
             >
               Home
             </Button>
-            <Button
-              sx={{ my: 2, color: "white", display: "block" }}
-              onClick={() => navigate("/createpetdetails")}
-            >
-              New Shop
-            </Button>
+
+            {admin ? (
+              <Button
+                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={() => navigate("/createpetdetails")}
+              >
+                New Shop
+              </Button>
+            ) : (
+              <Button
+                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={() => navigate("/createuserpet")}
+              >
+                Pet Shop
+              </Button>
+            )}
+
+            {admin ? (
+              <Button
+                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={() => navigate("/allpetstatus")}
+              >
+                Check Orders
+              </Button>
+            ) : (
+              <Button
+                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={() => navigate("/petstatus")}
+              >
+                Pet Status
+              </Button>
+            )}
           </Box>
 
-          <Box sx={{ display: "flex", mr: "50%" }}>
+          <Box sx={{ display: "flex", mr: "40%" }}>
             <form action="" onSubmit={handleSubmitCity}>
               <input
                 type="text"
