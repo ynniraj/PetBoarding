@@ -93,8 +93,31 @@ const getbyverified = async (req, res) => {
     }
 }
 
+const petshopupdate = async (req, res) => {
+    try {
+        const petshop = await Petshop.findByIdAndUpdate(req.params.id, req.body, {
+            new: true
+        }).lean().exec();
+
+        return res.status(201).send(petshop)
+    }
+    catch (e) {
+        return res.status(500).json({ message: e.message, status: "Failed" });
+    }
+}
+
+const deletepetshop = async (req, res) => {
+    try {
+        const petshop = await Petshop.findByIdAndDelete(req.params.id);
+
+        return res.status(200).send(petshop);
+    }
+    catch (e) {
+        return res.status(500).json({ message: e.message, status: "Failed" })
+    }
+}
 
 
 
-module.exports = { highrating, lowrating, createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified };
+module.exports = { deletepetshop, petshopupdate, highrating, lowrating, createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified };
 

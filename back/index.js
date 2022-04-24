@@ -9,7 +9,7 @@ const connect = require('./db/db');
 const { register, login, getuserbyid } = require('./controllers/user.controller')
 const { createpetdetail } = require('./controllers/petdetails.controller')
 const { userpet, getuserpet, getuserpetbyid, adminuserdetails, adminpatch } = require('./controllers/userpet.controller')
-const { createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified, highrating, lowrating } = require('./controllers/petshop.controller')
+const { deletepetshop, petshopupdate, createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified, highrating, lowrating } = require('./controllers/petshop.controller')
 
 app.post("/register", register)
 app.get("/getpetshop", getpetshop)
@@ -29,6 +29,8 @@ app.get("/getuserpet", getuserpet)
 app.get("/getuserpetbyid/:id", getuserpetbyid)
 app.get("/adminuserdetails/:id", adminuserdetails)
 app.patch("/adminpatch/:id", adminpatch)
+app.patch("/petshopupdate/:id", petshopupdate)
+app.delete("/deletepetshop/:id", deletepetshop)
 
 
 

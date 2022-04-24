@@ -28,7 +28,7 @@ const Routers = () => {
       <ThemeProvider theme={darkTheme}>
         <Navbar setMode={setMode} mode={mode} />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home mode={mode} />} />
           <Route exact path="/register" element={<SignUp />} />
           <Route exact path="/login" element={<SignIn />} />
           <Route exact path="/petstoredetails" element={<PetDetails />} />

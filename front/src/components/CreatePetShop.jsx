@@ -63,9 +63,14 @@ export default function CreatePetShop() {
               noValidate
               onSubmit={handleSubmitShop}
               sx={{ mt: 3 }}
+              width={900}
             >
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={6}>
                   <TextField
                     autoComplete="off"
                     name="name"
@@ -77,7 +82,7 @@ export default function CreatePetShop() {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth
@@ -88,7 +93,7 @@ export default function CreatePetShop() {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth
@@ -98,7 +103,7 @@ export default function CreatePetShop() {
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth
@@ -109,7 +114,7 @@ export default function CreatePetShop() {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth
@@ -119,7 +124,7 @@ export default function CreatePetShop() {
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth
@@ -129,7 +134,7 @@ export default function CreatePetShop() {
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth
@@ -139,7 +144,7 @@ export default function CreatePetShop() {
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     required
                     fullWidth

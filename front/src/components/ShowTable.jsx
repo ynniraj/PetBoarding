@@ -10,11 +10,14 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import axios from "axios";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../Redux/DataApi/action";
+import { adminLogin } from "../Redux/Login/action";
+import Modal from "@mui/material/Modal";
+import { Grid, TextField } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,10 +39,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function ShowTable() {
+export default function ShowTable({ mode }) {
   const dispatch = useDispatch();
 
   const getTableData = useSelector((store) => store.getDataReducer.products);
+  const admin = useSelector((store) => store.adminReducer.admin);
+  const localStorageAdmin = localStorage.getItem("admin");
+  dispatch(adminLogin(localStorageAdmin));
 
   const navigate = useNavigate();
 
@@ -135,6 +141,40 @@ export default function ShowTable() {
       });
   };
 
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
+
+  const handleUpdateChanges = (event) => {
+    event.preventDefault();
+    const payload = {
+      name: event.target.name.value,
+      city: event.target.city.value,
+      costperday: event.target.costperday.value,
+      rating: event.target.rating.value,
+      petshopdetails: JSON.parse(localStorage.getItem("petdeatilId")),
+    };
+    axios
+      .patch(`http://localhost:8080/petshopupdate/${id}`, payload)
+      .then((response) => {
+        getpetdata();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:8080/deletepetshop/${id}`)
+      .then((response) => {
+        console.log(response);
+        getpetdata();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Box>
@@ -152,14 +192,14 @@ export default function ShowTable() {
           >
             <Box>
               <Button variant="contained" onClick={handleHighSort}>
-                Sort High to Low
+                Sort Cost High to Low
               </Button>
               <Button
                 variant="contained"
                 sx={{ mx: 2 }}
                 onClick={handlelowSort}
               >
-                Sort Low to High
+                Sort Cost Low to High
               </Button>
             </Box>
             <Box>
@@ -200,15 +240,19 @@ export default function ShowTable() {
                   <StyledTableCell align="center">Verified</StyledTableCell>
                   <StyledTableCell align="center">Rating</StyledTableCell>
                   <StyledTableCell align="center">Image</StyledTableCell>
+                  {admin ? (
+                    <>
+                      <StyledTableCell align="center">Edit</StyledTableCell>
+                      <StyledTableCell align="center">Delete</StyledTableCell>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {getTableData.map((el) => (
-                  <StyledTableRow
-                    key={el._id}
-                    onClick={() => handlePetDetails(el._id)}
-                    sx={{ cursor: "pointer" }}
-                  >
+                  <StyledTableRow key={el._id} sx={{ cursor: "pointer" }}>
                     <StyledTableCell align="center">{el.name}</StyledTableCell>
                     <StyledTableCell align="center">{el.city}</StyledTableCell>
                     <StyledTableCell align="center">
@@ -226,7 +270,11 @@ export default function ShowTable() {
                     <StyledTableCell align="center">
                       {el.rating}
                     </StyledTableCell>
-                    <StyledTableCell align="center" sx={{ width: "14%" }}>
+                    <StyledTableCell
+                      align="center"
+                      sx={{ width: "14%" }}
+                      onClick={() => handlePetDetails(el._id)}
+                    >
                       {" "}
                       <img
                         src={el.image}
@@ -234,12 +282,123 @@ export default function ShowTable() {
                         style={{ width: "100%" }}
                       />{" "}
                     </StyledTableCell>
+                    {admin ? (
+                      <>
+                        <StyledTableCell align="center">
+                          <Button
+                            onClick={() => setOpen(true) || setId(el._id)}
+                            variant="contained"
+                            color="success"
+                          >
+                            Edit
+                          </Button>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          <Button
+                            onClick={() => handleDelete(el._id)}
+                            variant="contained"
+                            color="error"
+                          >
+                            Delete
+                          </Button>
+                        </StyledTableCell>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
         </Container>
+        <Modal
+          open={open}
+          onClose={(e) => setOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            sx={{
+              width: "600px",
+              height: "250px",
+              borderRadius: "10px",
+            }}
+            bgcolor={mode === "light" ? "white" : "black"}
+          >
+            <Box
+              noValidate
+              sx={{ mt: 1, padding: "30px" }}
+              component="form"
+              onSubmit={handleUpdateChanges}
+            >
+              <Grid
+                container
+                rowSpacing={1}
+                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              >
+                <Grid item xs={6}>
+                  <TextField
+                    autoComplete="off"
+                    name="name"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Shop Name"
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    autoComplete="off"
+                    name="city"
+                    required
+                    fullWidth
+                    id="city"
+                    label="City"
+                    autoFocus
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="costperday"
+                    label="Cost Per Day"
+                    name="costperday"
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="rating"
+                    label="Ratings"
+                    name="rating"
+                    autoComplete="off"
+                  />
+                </Grid>
+              </Grid>
+
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                type="submit"
+              >
+                Update Changes
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
       </Box>
     </>
   );

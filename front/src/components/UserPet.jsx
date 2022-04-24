@@ -29,6 +29,7 @@ export default function UserPet() {
       .post("https://petshop-project.herokuapp.com/userpet", payload)
       .then((res) => {
         console.log(res);
+        document.getElementById("texthide").style.display = "block";
       })
       .catch((err) => {
         console.log(err);
@@ -42,7 +43,7 @@ export default function UserPet() {
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 5,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -124,6 +125,17 @@ export default function UserPet() {
                   </Box>
                 </Grid>
               </Grid>
+              <Typography
+                id="texthide"
+                sx={{
+                  textAlign: "center",
+                  paddingTop: "20px",
+                  display: "none",
+                  color: "green",
+                }}
+              >
+                Pet Register Successfully
+              </Typography>
               <Button
                 type="submit"
                 fullWidth
