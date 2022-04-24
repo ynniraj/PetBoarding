@@ -8,7 +8,6 @@ import TabPanel from "@mui/lab/TabPanel";
 import { Button, Grid } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -23,7 +22,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function PetStatusShop() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [value, setValue] = React.useState("1");

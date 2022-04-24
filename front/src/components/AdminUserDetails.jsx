@@ -7,22 +7,8 @@ import TabList from "@mui/lab/TabList";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import TabPanel from "@mui/lab/TabPanel";
-import { Grid } from "@mui/material";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
-import { selectProducts } from "../Redux/DataApi/action";
-import { useDispatch, useSelector } from "react-redux";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 export default function AdminUserDetails() {
-  const dispatch = useDispatch();
 
   const [value, setValue] = React.useState("1");
 
@@ -38,7 +24,9 @@ export default function AdminUserDetails() {
   const getAdminUserData = () => {
     const adminuserid = localStorage.getItem("adminuserid");
     axios
-      .get(`https://petshop-project.herokuapp.com/adminuserdetails/${adminuserid}`)
+      .get(
+        `https://petshop-project.herokuapp.com/adminuserdetails/${adminuserid}`
+      )
       .then((res) => {
         console.log(res);
         setUserData([res.data]);
