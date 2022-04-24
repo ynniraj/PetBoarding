@@ -65,16 +65,16 @@ export default function PetStatus() {
 
   return (
     <>
-      <Container component="main" maxWidth="m">
-        <TableContainer component={Paper}>
+      <Container component="main" maxWidth="s">
+        <TableContainer component={Paper} sx={{ mt: 5 }}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>Pet Name</StyledTableCell>
-                <StyledTableCell align="right">Pet Type</StyledTableCell>
-                <StyledTableCell align="right">Start Date</StyledTableCell>
-                <StyledTableCell align="right">End Date</StyledTableCell>
-                <StyledTableCell align="right">Status</StyledTableCell>
+                <StyledTableCell align="center">Pet Type</StyledTableCell>
+                <StyledTableCell align="center">Start Date</StyledTableCell>
+                <StyledTableCell align="center">End Date</StyledTableCell>
+                <StyledTableCell align="center">Status</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -84,13 +84,13 @@ export default function PetStatus() {
                   sx={{ cursor: "pointer" }}
                   onClick={() => handlePetStatus(el._id)}
                 >
-                  <StyledTableCell align="right">{el.name}</StyledTableCell>
-                  <StyledTableCell align="right">{el.pettype}</StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell align="center">{el.name}</StyledTableCell>
+                  <StyledTableCell align="center">{el.pettype}</StyledTableCell>
+                  <StyledTableCell align="center">
                     {el.startdate}
                   </StyledTableCell>
-                  <StyledTableCell align="right">{el.enddate}</StyledTableCell>
-                  <StyledTableCell align="right">{el.status}</StyledTableCell>
+                  <StyledTableCell align="center">{el.enddate}</StyledTableCell>
+                  <StyledTableCell align="center">{el.status}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

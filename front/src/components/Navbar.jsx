@@ -17,8 +17,11 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin, adminLogin, userImage } from "../Redux/Login/action";
 import { setProducts } from "../Redux/DataApi/action";
+import { Switch } from "@mui/material";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
-const Navbar = () => {
+const Navbar = ({ mode, setMode }) => {
   const dispatch = useDispatch();
 
   const token = useSelector((store) => store.LogInReducer.token);
@@ -177,20 +180,20 @@ const Navbar = () => {
             ) : (
               ""
             )}
-            {token ? (
+            {admin ? (
+              ""
+            ) : (
               <Button
                 sx={{ my: 2, color: "white", display: "block" }}
                 onClick={() => navigate("/petstatus")}
               >
                 Pet Status
               </Button>
-            ) : (
-              ""
             )}
           </Box>
 
           {token ? (
-            <Box sx={{ display: "flex", mr: "40%" }}>
+            <Box sx={{ display: "flex", mr: "30%" }}>
               <form action="" onSubmit={handleSubmitCity}>
                 <input
                   type="text"
@@ -221,6 +224,11 @@ const Navbar = () => {
           ) : (
             ""
           )}
+          <LightModeIcon />
+          <Switch
+            onChange={(e) => setMode(mode === "light" ? "dark" : "light")}
+          />
+          <DarkModeIcon sx={{ mr: 5 }} />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

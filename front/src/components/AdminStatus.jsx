@@ -12,9 +12,6 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../Redux/DataApi/action";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -78,38 +75,53 @@ export default function AdminStatus() {
   return (
     <>
       <Container component="main" maxWidth="m">
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ mt: 4 }}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>Pet Name</StyledTableCell>
-                <StyledTableCell align="right">Pet Type</StyledTableCell>
-                <StyledTableCell align="right">Start Date</StyledTableCell>
-                <StyledTableCell align="right">End Date</StyledTableCell>
-                <StyledTableCell align="right">Status</StyledTableCell>
-                <StyledTableCell align="right">View</StyledTableCell>
+                <StyledTableCell align="center">Pet Name</StyledTableCell>
+                <StyledTableCell align="center">Pet Type</StyledTableCell>
+                <StyledTableCell align="center">Start Date</StyledTableCell>
+                <StyledTableCell align="center">End Date</StyledTableCell>
+                <StyledTableCell align="center">Status</StyledTableCell>
+                <StyledTableCell align="center">View</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {userpet.map((el) => (
                 <StyledTableRow key={el._id} sx={{ cursor: "pointer" }}>
-                  <StyledTableCell align="right">{el.name}</StyledTableCell>
-                  <StyledTableCell align="right">{el.pettype}</StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell align="center">{el.name}</StyledTableCell>
+                  <StyledTableCell align="center">{el.pettype}</StyledTableCell>
+                  <StyledTableCell align="center">
                     {el.startdate}
                   </StyledTableCell>
-                  <StyledTableCell align="right">{el.enddate}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    {
-                      <Button onClick={() => handleStatus(el._id)}>
+                  <StyledTableCell align="center">{el.enddate}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {el.status === "Confirmed" ? (
+                      <Button
+                        onClick={() => handleStatus(el._id)}
+                        color="success"
+                        variant="contained"
+                      >
                         {el.status}
                       </Button>
-                    }
+                    ) : (
+                      <Button
+                        onClick={() => handleStatus(el._id)}
+                        color="error"
+                        variant="outlined"
+                      >
+                        {el.status}
+                      </Button>
+                    )}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell align="center">
                     {
-                      <Button onClick={() => handleUserDetails(el._id)}>
-                        View
+                      <Button
+                        onClick={() => handleUserDetails(el._id)}
+                        variant="contained"
+                      >
+                        User
                       </Button>
                     }
                   </StyledTableCell>

@@ -137,92 +137,110 @@ export default function ShowTable() {
 
   return (
     <>
-      <Container component="main" maxWidth="m">
-        <Box
-          component="form"
-          noValidate
-          sx={{
-            mx: 2,
-            mt: 3,
-            mb: 3,
-            display: "flex",
-            justifyContent: "space-around",
-          }}
-        >
-          <Box>
-            <Button variant="contained" onClick={handleHighSort}>
-              Sort High to Low
-            </Button>
-            <Button variant="contained" sx={{ mx: 2 }} onClick={handlelowSort}>
-              Sort Low to High
-            </Button>
+      <Box>
+        <Container component="main" maxWidth="m">
+          <Box
+            component="form"
+            noValidate
+            sx={{
+              mx: 2,
+              mt: 3,
+              mb: 3,
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <Box>
+              <Button variant="contained" onClick={handleHighSort}>
+                Sort High to Low
+              </Button>
+              <Button
+                variant="contained"
+                sx={{ mx: 2 }}
+                onClick={handlelowSort}
+              >
+                Sort Low to High
+              </Button>
+            </Box>
+            <Box>
+              <Button variant="contained" onClick={handleVerifiedSort}>
+                Sort Verified
+              </Button>
+              <Button
+                variant="contained"
+                sx={{ mx: 2 }}
+                onClick={handleUnverifiedSort}
+              >
+                Sort Unverified
+              </Button>
+            </Box>
+            <Box>
+              <Button variant="contained" onClick={handleRatingHigh}>
+                Sort Rating High To Low
+              </Button>
+              <Button
+                variant="contained"
+                sx={{ mx: 2 }}
+                onClick={handleRatingLow}
+              >
+                Sort Rating Low To High
+              </Button>
+            </Box>
           </Box>
-          <Box>
-            <Button variant="contained" onClick={handleVerifiedSort}>
-              Sort Verified
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ mx: 2 }}
-              onClick={handleUnverifiedSort}
-            >
-              Sort Unverified
-            </Button>
-          </Box>
-          <Box>
-            <Button variant="contained" onClick={handleRatingHigh}>
-              Sort Rating High To Low
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ mx: 2 }}
-              onClick={handleRatingLow}
-            >
-              Sort Rating Low To High
-            </Button>
-          </Box>
-        </Box>
 
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Name</StyledTableCell>
-                <StyledTableCell align="right">City</StyledTableCell>
-                <StyledTableCell align="right">Address</StyledTableCell>
-                <StyledTableCell align="right">Capacity</StyledTableCell>
-                <StyledTableCell align="right">Cost per day</StyledTableCell>
-                <StyledTableCell align="right">Verified</StyledTableCell>
-                <StyledTableCell align="right">Rating</StyledTableCell>
-                <StyledTableCell align="right">Image</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {getTableData.map((el) => (
-                <StyledTableRow
-                  key={el._id}
-                  onClick={() => handlePetDetails(el._id)}
-                  sx={{ cursor: "pointer" }}
-                >
-                  <StyledTableCell align="right">{el.name}</StyledTableCell>
-                  <StyledTableCell align="right">{el.city}</StyledTableCell>
-                  <StyledTableCell align="right">{el.address}</StyledTableCell>
-                  <StyledTableCell align="right">{el.capacity}</StyledTableCell>
-                  <StyledTableCell align="right">
-                    {el.costperday}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{el.verified}</StyledTableCell>
-                  <StyledTableCell align="right">{el.rating}</StyledTableCell>
-                  <StyledTableCell align="right" sx={{ width: "14%" }}>
-                    {" "}
-                    <img src={el.image} alt="" style={{ width: "100%" }} />{" "}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell align="center">Name</StyledTableCell>
+                  <StyledTableCell align="center">City</StyledTableCell>
+                  <StyledTableCell align="center">Address</StyledTableCell>
+                  <StyledTableCell align="center">Capacity</StyledTableCell>
+                  <StyledTableCell align="center">Cost per day</StyledTableCell>
+                  <StyledTableCell align="center">Verified</StyledTableCell>
+                  <StyledTableCell align="center">Rating</StyledTableCell>
+                  <StyledTableCell align="center">Image</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {getTableData.map((el) => (
+                  <StyledTableRow
+                    key={el._id}
+                    onClick={() => handlePetDetails(el._id)}
+                    sx={{ cursor: "pointer" }}
+                  >
+                    <StyledTableCell align="center">{el.name}</StyledTableCell>
+                    <StyledTableCell align="center">{el.city}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      {el.address}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {el.capacity}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {el.costperday}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {el.verified}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {el.rating}
+                    </StyledTableCell>
+                    <StyledTableCell align="center" sx={{ width: "14%" }}>
+                      {" "}
+                      <img
+                        src={el.image}
+                        alt=""
+                        style={{ width: "100%" }}
+                      />{" "}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Container>
+      </Box>
     </>
   );
 }

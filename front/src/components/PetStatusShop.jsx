@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import SendIcon from "@mui/icons-material/Send";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -40,7 +41,9 @@ export default function PetStatusShop() {
   const getuserpetdetails = () => {
     const petStatus = localStorage.getItem("petStatus");
     axios
-      .get(`https://petshop-project.herokuapp.com/adminuserdetails/${petStatus}`)
+      .get(
+        `https://petshop-project.herokuapp.com/adminuserdetails/${petStatus}`
+      )
       .then((res) => {
         console.log(res);
         setImg(res.data.petshopdetail[0]);
@@ -53,7 +56,7 @@ export default function PetStatusShop() {
   console.log(image);
   return (
     <>
-      <Container>
+      <Container sx={{ mb: 5 }}>
         <Box sx={{ display: "flex", justifyContent: "space-around", mt: 5 }}>
           <Box sx={{ width: "40%" }}>
             <img src={image.image} alt="" srcset="" style={{ width: "100%" }} />
@@ -65,7 +68,7 @@ export default function PetStatusShop() {
                 margin: "0px",
                 padding: "0px",
                 marginBottom: "10px",
-                color: "Blue",
+                color: "Black",
               }}
             >
               {image.name}
@@ -82,23 +85,32 @@ export default function PetStatusShop() {
             </p>
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: "divider", mt: 3 }}>
-                <TabList
-                  onChange={handleChange}
-                  aria-label="lab API tabs example"
-                >
-                  <Tab label="Our Mission" value="1" sx={{ mr: 30, ml: 5 }} />
-                  <Tab label="Book A Slot " value="2" />
-                </TabList>
+                <Item>
+                  <TabList
+                    onChange={handleChange}
+                    aria-label="lab API tabs example"
+                  >
+                    <Tab label="Our Mission" value="1" sx={{ mr: 30, ml: 5 }} />
+                    <Tab label="Book A Slot " value="2" />
+                  </TabList>
+                </Item>
               </Box>
-              <TabPanel value="1" sx={{ fontSize: "20px" }}>
-                Saving one dog will not change the world, but surely for that
-                one dog, the world will change forever.
-              </TabPanel>
-              <TabPanel value="2" sx={{ fontSize: "20px" }}>
-                <Button onClick={() => navigate("/createuserpet")}>
-                  Book Again
-                </Button>
-              </TabPanel>
+              <Item>
+                <TabPanel value="1" sx={{ fontSize: "15px" }}>
+                  Saving one dog will not change the world, but surely for that
+                  one dog, the world will change forever.
+                </TabPanel>
+                <TabPanel value="2" sx={{ fontSize: "30px" }}>
+                  <Button
+                    onClick={() => navigate("/createuserpet")}
+                    variant="contained"
+                    color="success"
+                    endIcon={<SendIcon />}
+                  >
+                    Book Again
+                  </Button>
+                </TabPanel>
+              </Item>
             </TabContext>
           </Box>
         </Box>

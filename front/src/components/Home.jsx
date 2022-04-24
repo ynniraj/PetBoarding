@@ -10,6 +10,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const localStorageToken = localStorage.getItem("token");
+
   dispatch(userLogin(localStorageToken));
   return <>{!token ? <LoginFirst /> : <ShowTable />}</>;
 };
