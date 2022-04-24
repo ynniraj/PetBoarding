@@ -154,7 +154,10 @@ export default function ShowTable({ mode }) {
       petshopdetails: JSON.parse(localStorage.getItem("petdeatilId")),
     };
     axios
-      .patch(`http://localhost:8080/petshopupdate/${id}`, payload)
+      .patch(
+        `https://petshop-project.herokuapp.com/petshopupdate/${id}`,
+        payload
+      )
       .then((response) => {
         getpetdata();
       })
@@ -165,7 +168,7 @@ export default function ShowTable({ mode }) {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8080/deletepetshop/${id}`)
+      .delete(`https://petshop-project.herokuapp.com/deletepetshop/${id}`)
       .then((response) => {
         console.log(response);
         getpetdata();
