@@ -14,7 +14,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import { productSuccessData, setProducts } from "../Redux/DataApi/action";
+import {
+  productSuccessData,
+  productSortedData,
+  SortedbyNameData,
+} from "../Redux/DataApi/action";
 import Modal from "@mui/material/Modal";
 import { Grid, TextField } from "@mui/material";
 
@@ -62,82 +66,26 @@ export default function ShowTable({ mode }) {
   };
 
   const handleHighSort = () => {
-    axios
-      .get(
-        `https://petshop-project.herokuapp.com/sortedpetshop?sorttype=costperday&sortdirection=-1`
-      )
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setProducts(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(productSortedData("costperday", -1));
   };
   const handlelowSort = () => {
-    axios
-      .get(
-        `https://petshop-project.herokuapp.com/sortedpetshop?sorttype=costperday&sortdirection=1`
-      )
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setProducts(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(productSortedData("costperday", 1));
   };
 
   const handleVerifiedSort = () => {
-    axios
-      .get(`https://petshop-project.herokuapp.com/getbyverified/Verified`)
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setProducts(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(SortedbyNameData("verified", "Verified"));
   };
 
   const handleUnverifiedSort = () => {
-    axios
-      .get(`https://petshop-project.herokuapp.com/getbyverified/Unverified`)
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setProducts(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(SortedbyNameData("verified", "Unverified"));
   };
 
   const handleRatingHigh = () => {
-    axios
-      .get(
-        `https://petshop-project.herokuapp.com/sortedpetshop?sorttype=rating&sortdirection=-1`
-      )
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setProducts(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(productSortedData("rating", -1));
   };
 
   const handleRatingLow = () => {
-    axios
-      .get(
-        `https://petshop-project.herokuapp.com/sortedpetshop?sorttype=rating&sortdirection=1`
-      )
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setProducts(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(productSortedData("rating", 1));
   };
 
   const [open, setOpen] = useState(false);

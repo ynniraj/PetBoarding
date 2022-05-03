@@ -23,9 +23,13 @@ const getpetshopbyid = async (req, res) => {
 }
 
 
-const getpetbycity = async (req, res) => {
+const getpetbyname = async (req, res) => {
     try {
-        const petshop = await Petshop.find({ city: req.params.name }).lean().exec()
+        var sortObject = {};
+        var stype = req.query.sorttype;
+        var sdir = req.query.sortdirection;
+        sortObject[stype] = sdir;
+        const petshop = await Petshop.find(sortObject).lean().exec()
         return res.status(200).send(petshop);
     } catch (err) {
         return res.status(500).send(err)
@@ -63,14 +67,7 @@ const sortedpetshop = async (req, res) => {
     }
 }
 
-const getbyverified = async (req, res) => {
-    try {
-        const petshop = await Petshop.find({ verified: req.params.name }).lean().exec()
-        return res.status(200).send(petshop);
-    } catch (err) {
-        return res.status(500).send(err)
-    }
-}
+
 
 const petshopupdate = async (req, res) => {
     try {
@@ -98,5 +95,5 @@ const deletepetshop = async (req, res) => {
 
 
 
-module.exports = { deletepetshop, petshopupdate, createpetshop, getpetshop, getpetshopbyid, getpetbycity, sortedpetshop, getbyverified };
+module.exports = { deletepetshop, petshopupdate, createpetshop, getpetshop, getpetshopbyid, getpetbyname, sortedpetshop };
 

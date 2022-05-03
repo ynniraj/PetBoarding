@@ -30,6 +30,35 @@ export const productSuccessData = () => async (dispatch) => {
             console.log(err);
         });
 };
+export const productSortedData = (type, order) => async (dispatch) => {
+    await axios
+        .get(`https://petshop-project.herokuapp.com/sortedpetshop?sorttype=${type}&sortdirection=${order}`
+        )
+        .then((res) => {
+            console.log(res.data);
+            dispatch(setProducts(res.data));
+        })
+        .catch((err) => {
+            dispatch(productError());
+
+            console.log(err);
+        });
+};
+export const SortedbyNameData = (type, order) => async (dispatch) => {
+    await axios
+        .get(
+            `https://petshop-project.herokuapp.com/getpetbyname?sorttype=${type}&sortdirection=${order}`
+        )
+        .then((response) => {
+            console.log(response.data);
+            dispatch(setProducts(response.data));
+        })
+        .catch((err) => {
+            dispatch(productError());
+
+            console.log(err);
+        });
+};
 
 
 

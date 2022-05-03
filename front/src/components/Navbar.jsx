@@ -16,7 +16,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin, adminLogin, userImage } from "../Redux/Login/action";
-import { setProducts } from "../Redux/DataApi/action";
+import { SortedbyNameData } from "../Redux/DataApi/action";
 import { Switch } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -57,15 +57,7 @@ const Navbar = ({ mode, setMode }) => {
   const [city, setCity] = useState("");
   const handleSubmitCity = (e) => {
     e.preventDefault();
-    axios
-      .get(`https://petshop-project.herokuapp.com/getpetbycity/${city}`)
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setProducts(response.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(SortedbyNameData("city", city));
   };
 
   const handleSignup = () => {
