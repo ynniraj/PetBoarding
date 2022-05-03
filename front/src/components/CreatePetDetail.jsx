@@ -11,6 +11,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const theme = createTheme();
 
@@ -37,11 +39,14 @@ export default function CreatePetDetail() {
           "petdeatilId",
           JSON.stringify(res.data.petshop._id)
         );
-        alert("pet Details created successfully");
-        navigate("/createpetshop");
+        toast.success("Pet Detail Created Successfully");
+        setTimeout(() => {
+          navigate("/createpetshop");
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Pet Detail Failed");
       });
   };
 
@@ -173,6 +178,7 @@ export default function CreatePetDetail() {
           </Box>
         </Container>
       </Box>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

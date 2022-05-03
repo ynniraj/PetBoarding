@@ -10,10 +10,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function CreatePetShop() {
+  const navigate = useNavigate();
+
   const handleSubmitShop = (event) => {
     event.preventDefault();
     const payload = {
@@ -32,10 +37,13 @@ export default function CreatePetShop() {
       .post("https://petshop-project.herokuapp.com/createpetshop", payload)
       .then((res) => {
         console.log(res);
-        alert("Flat created successfully");
+        toast.success("Pet Shop Created Successfully");
+        setTimeout(() => {
+          navigate("/createpetshop");
+        }, 1000);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Pet Shop Created Successfully");
       });
   };
 
@@ -167,6 +175,7 @@ export default function CreatePetShop() {
           </Box>
         </Container>
       </Box>
+      <ToastContainer />
     </ThemeProvider>
   );
 }
