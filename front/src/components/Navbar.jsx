@@ -242,11 +242,7 @@ const Navbar = ({ mode, setMode }) => {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography
-                  textAlign="center"
-                  onClick={() => navigate("/login")}
-                  sx={{ padding: "2px" }}
-                >
+                <Typography textAlign="center" sx={{ padding: "2px" }}>
                   Profile
                 </Typography>
               </MenuItem>
