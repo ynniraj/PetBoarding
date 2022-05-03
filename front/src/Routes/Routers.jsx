@@ -25,26 +25,49 @@ const Routers = () => {
   });
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
-        <Navbar setMode={setMode} mode={mode} />
-        <Routes>
-          <Route exact path="/" element={<Home mode={mode} />} />
-          <Route exact path="/register" element={<SignUp />} />
-          <Route exact path="/login" element={<SignIn />} />
-          <Route exact path="/petstoredetails" element={<PetDetails />} />
-          <Route exact path="/createpetshop" element={<CreatePetShop />} />
-          <Route exact path="/createpetdetails" element={<CreatePetDetail />} />
-          <Route exact path="/createuserpet" element={<UserPet />} />
-          <Route exact path="/petstatus" element={<PetStatus />} />
-          <Route exact path="/allpetstatus" element={<AdminStatus />} />
-          <Route
-            exact
-            path="/adminuserdetails"
-            element={<AdminUserDetails />}
-          />
-          <Route exact path="/petstatusshop" element={<PetStatusShop />} />
-        </Routes>
-      </ThemeProvider>
+      <div
+        style={{
+          backgroundColor: mode === "light" ? "white" : "#303030",
+          width: "100%",
+        }}
+      >
+        <ThemeProvider theme={darkTheme}>
+          <Navbar setMode={setMode} mode={mode} />
+          <Routes>
+            <Route exact path="/" element={<Home mode={mode} />} />
+            <Route exact path="/register" element={<SignUp mode={mode} />} />
+            <Route exact path="/login" element={<SignIn mode={mode} />} />
+            <Route
+              exact
+              path="/petstoredetails"
+              element={<PetDetails mode={mode} />}
+            />
+            <Route exact path="/createpetshop" element={<CreatePetShop />} />
+            <Route
+              exact
+              path="/createpetdetails"
+              element={<CreatePetDetail />}
+            />
+            <Route
+              exact
+              path="/createuserpet"
+              element={<UserPet mode={mode} />}
+            />
+            <Route exact path="/petstatus" element={<PetStatus />} />
+            <Route exact path="/allpetstatus" element={<AdminStatus />} />
+            <Route
+              exact
+              path="/adminuserdetails"
+              element={<AdminUserDetails />}
+            />
+            <Route
+              exact
+              path="/petstatusshop"
+              element={<PetStatusShop mode={mode} />}
+            />
+          </Routes>
+        </ThemeProvider>
+      </div>
     </>
   );
 };

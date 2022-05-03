@@ -10,10 +10,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
-
 const theme = createTheme();
 
-export default function UserPet() {
+export default function UserPet({ mode }) {
   const handleSubmitShop = (event) => {
     event.preventDefault();
     const payload = {
@@ -38,7 +37,7 @@ export default function UserPet() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", height: "89vh" }}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -52,98 +51,116 @@ export default function UserPet() {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{
+                color: mode === "light" ? "#000" : "#fff",
+              }}
+            >
               User Pet Details
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmitShop}
-              sx={{ mt: 3 }}
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    autoComplete="off"
-                    name="name"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Pet Name"
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    autoComplete="off"
-                    name="pettype"
-                    required
-                    fullWidth
-                    id="pettype"
-                    label="Pet Type"
-                    autoFocus
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Box
-                    style={{
-                      margin: "auto",
-                      display: "block",
-                      width: "fit-content",
-                    }}
-                  >
-                    <TextField
-                      id="startdate"
-                      label="Choose Startday"
-                      type="date"
-                      defaultValue="2021-04-23"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Box>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Box
-                    style={{
-                      margin: "auto",
-                      display: "block",
-                      width: "fit-content",
-                    }}
-                  >
-                    <TextField
-                      id="enddate"
-                      label="Choose Endday"
-                      type="date"
-                      defaultValue="2021-04-23"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-              <Typography
-                id="texthide"
-                sx={{
-                  textAlign: "center",
-                  paddingTop: "20px",
-                  display: "none",
-                  color: "green",
-                }}
+            <Box>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmitShop}
+                sx={{ mt: 3 }}
               >
-                Pet Register Successfully
-              </Typography>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Register Pet Shop
-              </Button>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="off"
+                      name="name"
+                      required
+                      fullWidth
+                      id="name"
+                      label="Pet Name"
+                      autoFocus
+                      InputLabelProps={
+                        mode === "light" ? null : { style: { color: "white" } }
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="off"
+                      name="pettype"
+                      required
+                      fullWidth
+                      id="pettype"
+                      label="Pet Type"
+                      autoFocus
+                      InputLabelProps={
+                        mode === "light" ? null : { style: { color: "white" } }
+                      }
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Box
+                      style={{
+                        margin: "auto",
+                        display: "block",
+                        width: "fit-content",
+                      }}
+                    >
+                      <TextField
+                        id="startdate"
+                        label="Choose Startday"
+                        type="date"
+                        defaultValue="2021-04-23"
+                        InputLabelProps={
+                          mode === "light"
+                            ? null
+                            : { style: { color: "white" } }
+                        }
+                      />
+                    </Box>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Box
+                      style={{
+                        margin: "auto",
+                        display: "block",
+                        width: "fit-content",
+                      }}
+                    >
+                      <TextField
+                        id="enddate"
+                        label="Choose Endday"
+                        type="date"
+                        defaultValue="2021-04-23"
+                        InputLabelProps={
+                          mode === "light"
+                            ? null
+                            : { style: { color: "white" } }
+                        }
+                      />
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Typography
+                  id="texthide"
+                  sx={{
+                    textAlign: "center",
+                    paddingTop: "20px",
+                    display: "none",
+                    color: "green",
+                  }}
+                >
+                  Pet Register Successfully
+                </Typography>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Register Pet Shop
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Container>

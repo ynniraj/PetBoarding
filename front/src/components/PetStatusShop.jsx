@@ -14,14 +14,14 @@ import { useEffect, useState } from "react";
 import SendIcon from "@mui/icons-material/Send";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: theme.palette.mode === "dark" ? "#1e1e1e" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
-export default function PetStatusShop() {
+export default function PetStatusShop({ mode }) {
   const navigate = useNavigate();
 
   const [value, setValue] = React.useState("1");
@@ -54,7 +54,7 @@ export default function PetStatusShop() {
   console.log(image);
   return (
     <>
-      <Container sx={{ mb: 5 }}>
+      <Container sx={{ paddingBottom: "3%" }}>
         <Box sx={{ display: "flex", justifyContent: "space-around", mt: 5 }}>
           <Box sx={{ width: "40%" }}>
             <img src={image.image} alt="" srcset="" style={{ width: "100%" }} />
@@ -66,7 +66,7 @@ export default function PetStatusShop() {
                 margin: "0px",
                 padding: "0px",
                 marginBottom: "10px",
-                color: "Black",
+                color: mode === "light" ? "#000" : "#fff",
               }}
             >
               {image.name}
@@ -77,6 +77,7 @@ export default function PetStatusShop() {
                 margin: "0px",
                 padding: "0px",
                 fontWeight: "600",
+                color: mode === "light" ? "#000" : "#fff",
               }}
             >
               WE KEEP YOUR PETS HAPPY ALL TIME
@@ -120,6 +121,7 @@ export default function PetStatusShop() {
                 textAlign: "center",
                 fontSize: "24px",
                 marginTop: "50px",
+                color: mode === "light" ? "#000" : "#fff",
               }}
             >
               Services We Provide

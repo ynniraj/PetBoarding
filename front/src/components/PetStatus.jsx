@@ -61,7 +61,7 @@ export default function PetStatus() {
 
   return (
     <>
-      <Container component="main" maxWidth="s">
+      <Container component="main" maxWidth="s" sx={{ height: "100vh" }}>
         <TableContainer component={Paper} sx={{ mt: 5 }}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>

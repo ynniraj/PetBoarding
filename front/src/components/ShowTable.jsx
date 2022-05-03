@@ -128,7 +128,13 @@ export default function ShowTable({ mode }) {
   return (
     <>
       <Box>
-        <Container component="main" maxWidth="m">
+        <Container
+          component="main"
+          maxWidth="m"
+          sx={{
+            paddingBottom: "8%",
+          }}
+        >
           {loading ? (
             <Box
               sx={{
@@ -151,8 +157,8 @@ export default function ShowTable({ mode }) {
                 noValidate
                 sx={{
                   mx: 2,
-                  mt: 3,
                   mb: 3,
+                  paddingTop: "50px",
                   display: "flex",
                   justifyContent: "space-around",
                 }}

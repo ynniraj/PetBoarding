@@ -18,7 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp({mode}) {
   const [file, setFile] = useState();
 
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ paddingBottom: "46px" }}>
         <CssBaseline />
         <Box
           sx={{
@@ -99,6 +99,11 @@ export default function SignUp() {
                   id="Username"
                   label="Username"
                   autoFocus
+                  InputLabelProps={
+                    mode === "light"
+                      ? null
+                      : { style: { color: "white" } }
+                  }
                 />
               </Grid>
 
@@ -110,6 +115,11 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="off"
+                  InputLabelProps={
+                    mode === "light"
+                      ? null
+                      : { style: { color: "white" } }
+                  }
                 />
               </Grid>
 
@@ -121,6 +131,11 @@ export default function SignUp() {
                   label="Phone Number"
                   name="phone"
                   autoComplete="off"
+                  InputLabelProps={
+                    mode === "light"
+                      ? null
+                      : { style: { color: "white" } }
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -132,6 +147,11 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  InputLabelProps={
+                    mode === "light"
+                      ? null
+                      : { style: { color: "white" } }
+                  }
                 />
               </Grid>
             </Grid>

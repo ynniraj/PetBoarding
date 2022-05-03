@@ -27,7 +27,6 @@ export const loginSuccessData = (data, navigate, toast) => (dispatch) => {
                 dispatch(adminLogin(true));
                 localStorage.setItem("admin", "true");
                 toast.success("Admin Login Successful");
-
             }
             localStorage.setItem("token", res.data.token);
 

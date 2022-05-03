@@ -19,7 +19,7 @@ import { Modal } from "@mui/material";
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn({ mode }) {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ paddingBottom: "136px" }}>
         <CssBaseline />
         <Box
           sx={{
@@ -76,6 +76,9 @@ export default function SignIn() {
               label="Username"
               name="Username"
               autoFocus
+              InputLabelProps={
+                mode === "light" ? null : { style: { color: "white" } }
+              }
             />
             <TextField
               margin="normal"
@@ -86,6 +89,9 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              InputLabelProps={
+                mode === "light" ? null : { style: { color: "white" } }
+              }
             />
 
             {loading ? (
