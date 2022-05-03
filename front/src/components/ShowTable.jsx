@@ -14,8 +14,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../Redux/DataApi/action";
-import { adminLogin } from "../Redux/Login/action";
+import { productSuccessData, setProducts } from "../Redux/DataApi/action";
 import Modal from "@mui/material/Modal";
 import { Grid, TextField } from "@mui/material";
 
@@ -43,9 +42,9 @@ export default function ShowTable({ mode }) {
   const dispatch = useDispatch();
 
   const getTableData = useSelector((store) => store.getDataReducer.products);
+  const { loading } = useSelector((store) => store.getDataReducer);
+
   const admin = useSelector((store) => store.adminReducer.admin);
-  const localStorageAdmin = localStorage.getItem("admin");
-  dispatch(adminLogin(localStorageAdmin));
 
   const navigate = useNavigate();
 
@@ -54,15 +53,7 @@ export default function ShowTable({ mode }) {
   }, []);
 
   const getpetdata = () => {
-    axios
-      .get("https://petshop-project.herokuapp.com/getpetshop")
-      .then((res) => {
-        console.log(res.data);
-        dispatch(setProducts(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(productSuccessData());
   };
 
   const handlePetDetails = (id) => {
@@ -72,7 +63,9 @@ export default function ShowTable({ mode }) {
 
   const handleHighSort = () => {
     axios
-      .get(`https://petshop-project.herokuapp.com/highsortedpetshop`)
+      .get(
+        `https://petshop-project.herokuapp.com/sortedpetshop?sorttype=costperday&sortdirection=-1`
+      )
       .then((response) => {
         console.log(response.data);
         dispatch(setProducts(response.data));
@@ -83,7 +76,9 @@ export default function ShowTable({ mode }) {
   };
   const handlelowSort = () => {
     axios
-      .get(`https://petshop-project.herokuapp.com/lowsortedpetshop`)
+      .get(
+        `https://petshop-project.herokuapp.com/sortedpetshop?sorttype=costperday&sortdirection=1`
+      )
       .then((response) => {
         console.log(response.data);
         dispatch(setProducts(response.data));
@@ -119,7 +114,9 @@ export default function ShowTable({ mode }) {
 
   const handleRatingHigh = () => {
     axios
-      .get(`https://petshop-project.herokuapp.com/highrating`)
+      .get(
+        `https://petshop-project.herokuapp.com/sortedpetshop?sorttype=rating&sortdirection=-1`
+      )
       .then((response) => {
         console.log(response.data);
         dispatch(setProducts(response.data));
@@ -131,7 +128,9 @@ export default function ShowTable({ mode }) {
 
   const handleRatingLow = () => {
     axios
-      .get(`https://petshop-project.herokuapp.com/lowrating`)
+      .get(
+        `https://petshop-project.herokuapp.com/sortedpetshop?sorttype=rating&sortdirection=1`
+      )
       .then((response) => {
         console.log(response.data);
         dispatch(setProducts(response.data));
@@ -182,138 +181,165 @@ export default function ShowTable({ mode }) {
     <>
       <Box>
         <Container component="main" maxWidth="m">
-          <Box
-            component="form"
-            noValidate
-            sx={{
-              mx: 2,
-              mt: 3,
-              mb: 3,
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <Box>
-              <Button variant="contained" onClick={handleHighSort}>
-                Sort Cost High to Low
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ mx: 2 }}
-                onClick={handlelowSort}
-              >
-                Sort Cost Low to High
-              </Button>
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "10px",
+              }}
+            >
+              <img
+                src="https://miro.medium.com/max/1400/1*CsJ05WEGfunYMLGfsT2sXA.gif"
+                alt=""
+                style={{ width: "80%" }}
+              />
             </Box>
-            <Box>
-              <Button variant="contained" onClick={handleVerifiedSort}>
-                Sort Verified
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ mx: 2 }}
-                onClick={handleUnverifiedSort}
+          ) : (
+            <>
+              <Box
+                component="form"
+                noValidate
+                sx={{
+                  mx: 2,
+                  mt: 3,
+                  mb: 3,
+                  display: "flex",
+                  justifyContent: "space-around",
+                }}
               >
-                Sort Unverified
-              </Button>
-            </Box>
-            <Box>
-              <Button variant="contained" onClick={handleRatingHigh}>
-                Sort Rating High To Low
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ mx: 2 }}
-                onClick={handleRatingLow}
-              >
-                Sort Rating Low To High
-              </Button>
-            </Box>
-          </Box>
+                <Box>
+                  <Button variant="contained" onClick={handleHighSort}>
+                    Sort Cost High to Low
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ mx: 2 }}
+                    onClick={handlelowSort}
+                  >
+                    Sort Cost Low to High
+                  </Button>
+                </Box>
+                <Box>
+                  <Button variant="contained" onClick={handleVerifiedSort}>
+                    Sort Verified
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ mx: 2 }}
+                    onClick={handleUnverifiedSort}
+                  >
+                    Sort Unverified
+                  </Button>
+                </Box>
+                <Box>
+                  <Button variant="contained" onClick={handleRatingHigh}>
+                    Sort Rating High To Low
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ mx: 2 }}
+                    onClick={handleRatingLow}
+                  >
+                    Sort Rating Low To High
+                  </Button>
+                </Box>
+              </Box>
 
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">Name</StyledTableCell>
-                  <StyledTableCell align="center">City</StyledTableCell>
-                  <StyledTableCell align="center">Address</StyledTableCell>
-                  <StyledTableCell align="center">Capacity</StyledTableCell>
-                  <StyledTableCell align="center">Cost per day</StyledTableCell>
-                  <StyledTableCell align="center">Verified</StyledTableCell>
-                  <StyledTableCell align="center">Rating</StyledTableCell>
-                  <StyledTableCell align="center">Image</StyledTableCell>
-                  {admin ? (
-                    <>
-                      <StyledTableCell align="center">Edit</StyledTableCell>
-                      <StyledTableCell align="center">Delete</StyledTableCell>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {getTableData.map((el) => (
-                  <StyledTableRow key={el._id} sx={{ cursor: "pointer" }}>
-                    <StyledTableCell align="center">{el.name}</StyledTableCell>
-                    <StyledTableCell align="center">{el.city}</StyledTableCell>
-                    <StyledTableCell align="center">
-                      {el.address}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {el.capacity}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {el.costperday}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {el.verified}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {el.rating}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      align="center"
-                      sx={{ width: "14%" }}
-                      onClick={() => handlePetDetails(el._id)}
-                    >
-                      {" "}
-                      <img
-                        src={el.image}
-                        alt=""
-                        style={{ width: "100%" }}
-                      />{" "}
-                    </StyledTableCell>
-                    {admin ? (
-                      <>
-                        <StyledTableCell align="center">
-                          <Button
-                            onClick={() => setOpen(true) || setId(el._id)}
-                            variant="contained"
-                            color="success"
-                          >
-                            Edit
-                          </Button>
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          <Button
-                            onClick={() => handleDelete(el._id)}
-                            variant="contained"
-                            color="error"
-                          >
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell align="center">Name</StyledTableCell>
+                      <StyledTableCell align="center">City</StyledTableCell>
+                      <StyledTableCell align="center">Address</StyledTableCell>
+                      <StyledTableCell align="center">Capacity</StyledTableCell>
+                      <StyledTableCell align="center">
+                        Cost per day
+                      </StyledTableCell>
+                      <StyledTableCell align="center">Verified</StyledTableCell>
+                      <StyledTableCell align="center">Rating</StyledTableCell>
+                      <StyledTableCell align="center">Image</StyledTableCell>
+                      {admin ? (
+                        <>
+                          <StyledTableCell align="center">Edit</StyledTableCell>
+                          <StyledTableCell align="center">
                             Delete
-                          </Button>
+                          </StyledTableCell>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {getTableData.map((el) => (
+                      <StyledTableRow key={el._id} sx={{ cursor: "pointer" }}>
+                        <StyledTableCell align="center">
+                          {el.name}
                         </StyledTableCell>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                        <StyledTableCell align="center">
+                          {el.city}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {el.address}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {el.capacity}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {el.costperday}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {el.verified}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {el.rating}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          align="center"
+                          sx={{ width: "14%" }}
+                          onClick={() => handlePetDetails(el._id)}
+                        >
+                          {" "}
+                          <img
+                            src={el.image}
+                            alt=""
+                            style={{ width: "100%" }}
+                          />{" "}
+                        </StyledTableCell>
+                        {admin ? (
+                          <>
+                            <StyledTableCell align="center">
+                              <Button
+                                onClick={() => setOpen(true) || setId(el._id)}
+                                variant="contained"
+                                color="success"
+                              >
+                                Edit
+                              </Button>
+                            </StyledTableCell>
+                            <StyledTableCell align="center">
+                              <Button
+                                onClick={() => handleDelete(el._id)}
+                                variant="contained"
+                                color="error"
+                              >
+                                Delete
+                              </Button>
+                            </StyledTableCell>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
+          )}
         </Container>
         <Modal
           open={open}

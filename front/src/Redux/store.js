@@ -1,6 +1,12 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { getDataReducer } from '../Redux/DataApi/reducer';
-import { LogInReducer, adminReducer,userImageReducer } from '../Redux/Login/reducer';
+import { LogInReducer, adminReducer, userImageReducer } from '../Redux/Login/reducer';
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+
+
+const middleware = [thunk];
 
 const rootReducer = combineReducers({
     getDataReducer,
@@ -9,5 +15,7 @@ const rootReducer = combineReducers({
     userImageReducer
 })
 
-export const store = createStore(rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+export const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(...middleware))
+);

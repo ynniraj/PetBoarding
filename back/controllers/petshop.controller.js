@@ -2,6 +2,8 @@
 const Petshop = require('../models/petshop.model');
 
 
+
+
 const getpetshop = async (req, res) => {
     try {
         const petshop = await Petshop.find().populate({ path: "petshopdetails", select: ["shopname", "summary", "petwatch", "pettypes", "petsize", "supervision", "sleep", "pottybreaks", "walks", "hometype", "outdoorsize", "emergencytransport"] }).lean().exec()
@@ -45,38 +47,15 @@ const createpetshop = async (req, res) => {
 };
 
 
-const highsortedpetshop = async (req, res) => {
+
+const sortedpetshop = async (req, res) => {
+
     try {
-        const petshop = await Petshop.find().sort({ costperday: -1 }).lean().exec()
-        return res.status(200).send(petshop);
-
-    } catch (err) {
-        return res.status(500).send(err)
-    }
-}
-const lowsortedpetshop = async (req, res) => {
-    try {
-        const petshop = await Petshop.find().sort({ costperday: 1 }).lean().exec()
-        return res.status(200).send(petshop);
-
-    } catch (err) {
-        return res.status(500).send(err)
-    }
-}
-
-
-const highrating = async (req, res) => {
-    try {
-        const petshop = await Petshop.find().sort({ rating: -1 }).lean().exec()
-        return res.status(200).send(petshop);
-
-    } catch (err) {
-        return res.status(500).send(err)
-    }
-}
-const lowrating = async (req, res) => {
-    try {
-        const petshop = await Petshop.find().sort({ rating: 1 }).lean().exec()
+        var sortObject = {};
+        var stype = req.query.sorttype;
+        var sdir = req.query.sortdirection;
+        sortObject[stype] = sdir;
+        const petshop = await Petshop.find().sort(sortObject).lean().exec()
         return res.status(200).send(petshop);
 
     } catch (err) {
@@ -119,5 +98,5 @@ const deletepetshop = async (req, res) => {
 
 
 
-module.exports = { deletepetshop, petshopupdate, highrating, lowrating, createpetshop, getpetshop, getpetshopbyid, getpetbycity, lowsortedpetshop, highsortedpetshop, getbyverified };
+module.exports = { deletepetshop, petshopupdate, createpetshop, getpetshop, getpetshopbyid, getpetbycity, sortedpetshop, getbyverified };
 

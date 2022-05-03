@@ -14,6 +14,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FileBase64 from "react-file-base64";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const theme = createTheme();
 
@@ -29,7 +31,7 @@ export default function SignUp() {
       event.target.Username.value === "" ||
       event.target.password.value === ""
     ) {
-      document.getElementById("texthide").style.display = "block";
+      toast.error("Please fill all the fields");
     } else {
       const payload = {
         username: event.target.Username.value,
@@ -43,7 +45,7 @@ export default function SignUp() {
         .post("https://petshop-project.herokuapp.com/register", payload)
         .then((res) => {
           console.log(res.data.user);
-          alert("User created successfully");
+          toast.success("Registered Successfully");
           navigate("/login");
         })
         .catch((err) => {
@@ -132,17 +134,6 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
-                <Typography
-                  id="texthide"
-                  sx={{
-                    textAlign: "center",
-                    paddingTop: "20px",
-                    display: "none",
-                    color: "red",
-                  }}
-                >
-                  All Field is Required
-                </Typography>
               </Grid>
             </Grid>
 
@@ -169,6 +160,7 @@ export default function SignUp() {
           </Box>
         </Box>
       </Container>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

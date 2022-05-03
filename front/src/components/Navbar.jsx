@@ -36,8 +36,6 @@ const Navbar = ({ mode, setMode }) => {
 
   const navigate = useNavigate();
 
-  console.log(userImage, "SHDGk");
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
