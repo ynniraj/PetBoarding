@@ -1,5 +1,5 @@
 const id = 'ACc41a82b3e71e61feaddc9169a3352ca0';
-const token = '32831d6cc9e30d9124537d831aa118ae';
+const token = 'e6290ad659a30fe8dbdee7817f52156e';
 
 // Importing the Twilio module
 const twilio = require('twilio');
