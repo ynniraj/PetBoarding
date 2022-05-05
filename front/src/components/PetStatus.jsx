@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -86,7 +87,17 @@ export default function PetStatus() {
                     {el.startdate}
                   </StyledTableCell>
                   <StyledTableCell align="center">{el.enddate}</StyledTableCell>
-                  <StyledTableCell align="center">{el.status}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    {el.status === "Confirmed" ? (
+                      <Button color="success" variant="contained">
+                        Pay
+                      </Button>
+                    ) : (
+                      <Button color="error" variant="outlined">
+                        {el.status}
+                      </Button>
+                    )}
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

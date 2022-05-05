@@ -10,6 +10,8 @@ const { register, login, getuserbyid } = require('./controllers/user.controller'
 const { createpetdetail } = require('./controllers/petdetails.controller')
 const { userpet, getuserpet, getuserpetbyid, adminuserdetails, adminpatch } = require('./controllers/userpet.controller')
 const { deletepetshop, petshopupdate, createpetshop, getpetshop, getpetshopbyid, getpetbyname, sortedpetshop } = require('./controllers/petshop.controller')
+const { sendnotification } = require("./whatsapp")
+
 
 app.post("/register", register)
 app.get("/getpetshop", getpetshop)
@@ -28,6 +30,7 @@ app.get("/adminuserdetails/:id", adminuserdetails)
 app.patch("/adminpatch/:id", adminpatch)
 app.patch("/petshopupdate/:id", petshopupdate)
 app.delete("/deletepetshop/:id", deletepetshop)
+app.post("/sendnotification", sendnotification)
 
 
 

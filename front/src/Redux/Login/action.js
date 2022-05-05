@@ -33,6 +33,7 @@ export const loginSuccessData = (data, navigate, toast) => (dispatch) => {
             dispatch(userLogin(res.data.token));
             dispatch(userImage(res.data.user.image));
             localStorage.setItem("user_id", res.data.user._id);
+            localStorage.setItem("phone", res.data.user.phone);
             localStorage.setItem("user_image", res.data.user.image);
             toast.success("Login Successful");
             setTimeout(() => {

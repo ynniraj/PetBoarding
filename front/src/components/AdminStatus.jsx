@@ -65,11 +65,26 @@ export default function AdminStatus() {
       .patch(`https://petshop-project.herokuapp.com/adminpatch/${id}`, payload)
       .then((response) => {
         getalluser();
+        handleNotification();
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(payload);
+  };
+
+  const handleNotification = () => {
+    const to = localStorage.getItem("phone");
+    axios
+      .post(`http://localhost:8080/sendnotification`, {
+        to: to,
+        body: "Your order has been confirmed by the admin now you can pay the booking amount",
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
