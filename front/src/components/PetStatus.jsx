@@ -76,20 +76,38 @@ export default function PetStatus() {
             </TableHead>
             <TableBody>
               {getTableData.map((el) => (
-                <StyledTableRow
-                  key={el._id}
-                  sx={{ cursor: "pointer" }}
-                  onClick={() => handlePetStatus(el._id)}
-                >
-                  <StyledTableCell align="center">{el.name}</StyledTableCell>
-                  <StyledTableCell align="center">{el.pettype}</StyledTableCell>
-                  <StyledTableCell align="center">
+                <StyledTableRow key={el._id} sx={{ cursor: "pointer" }}>
+                  <StyledTableCell
+                    align="center"
+                    onClick={() => handlePetStatus(el._id)}
+                  >
+                    {el.name}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    onClick={() => handlePetStatus(el._id)}
+                  >
+                    {el.pettype}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    onClick={() => handlePetStatus(el._id)}
+                  >
                     {el.startdate}
                   </StyledTableCell>
-                  <StyledTableCell align="center">{el.enddate}</StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    onClick={() => handlePetStatus(el._id)}
+                  >
+                    {el.enddate}
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     {el.status === "Confirmed" ? (
-                      <Button color="success" variant="contained">
+                      <Button
+                        color="success"
+                        variant="contained"
+                        onClick={() => navigate("/checkout")}
+                      >
                         Pay
                       </Button>
                     ) : (

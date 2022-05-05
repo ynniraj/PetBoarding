@@ -15,6 +15,7 @@ import PetStatusShop from "../components/PetStatusShop";
 import { Box, createTheme } from "@mui/material";
 import { useState } from "react";
 import { ThemeProvider } from "@emotion/react";
+import Checkout from "../components/Payment/Checkout";
 
 const Routers = () => {
   const [mode, setMode] = useState("light");
@@ -65,6 +66,7 @@ const Routers = () => {
               path="/petstatusshop"
               element={<PetStatusShop mode={mode} />}
             />
+            <Route exact path="/checkout" element={<Checkout />} />
           </Routes>
         </ThemeProvider>
       </div>
