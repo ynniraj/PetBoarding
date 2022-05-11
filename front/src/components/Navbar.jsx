@@ -34,6 +34,7 @@ const Navbar = ({ mode, setMode }) => {
   dispatch(userImage(localStorageImage));
 
   const navigate = useNavigate();
+  const username = localStorage.getItem("user_name");
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -69,6 +70,7 @@ const Navbar = ({ mode, setMode }) => {
     localStorage.setItem("admin", "");
     localStorage.setItem("user_id", "");
     localStorage.setItem("user_image", "");
+    localStorage.setItem("user_name", "");
   };
   return (
     <AppBar position="static">
@@ -218,6 +220,19 @@ const Navbar = ({ mode, setMode }) => {
             onChange={(e) => setMode(mode === "light" ? "dark" : "light")}
           />
           <DarkModeIcon sx={{ mr: 5 }} />
+
+          {token ? (
+            <Typography
+              sx={{
+                textTransform: "uppercase",
+                fontSize: "14px",
+                padding: "10px",
+                cursor: "pointer",
+              }}
+            >
+              {username}
+            </Typography>
+          ) : null}
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
