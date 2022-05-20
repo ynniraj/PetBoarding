@@ -115,6 +115,8 @@ export default function PetStatus() {
                         {el.status}
                       </Button>
                     )}
+
+                    
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
